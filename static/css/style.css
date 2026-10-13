@@ -1,0 +1,22 @@
+.card{
+    transition:0.3s;
+    cursor:pointer;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 5px 20px rgba(0,0,0,0.15);
+}
+.card img{
+    height:250px;
+    object-fit:cover;
+}
+
+.card{
+    border:none;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    transition:0.3s;
+}

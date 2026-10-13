@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>{{ product['product_name'] }} - Mobile Store</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- Navbar -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div class="container">
+
+        <a class="navbar-brand" href="/">
+            Mobile Store
+        </a>
+
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#menu">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <div class="collapse navbar-collapse" id="menu">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="/">
+                        Home
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="/products">
+                        Products
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="/login">
+                        Login
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- Product Details -->
+
+<div class="container py-5">
+
+    <a href="/products"
+       class="btn btn-secondary mb-4">
+
+        ← Back to Products
+
+    </a>
+
+
+    <div class="row g-5">
+
+
+        <!-- Product Image -->
+
+        <div class="col-md-6">
+
+            {% if product['image'] %}
+
+                <img
+                    src="{{ url_for('static', filename='uploads/' + product['image']) }}"
+                    class="img-fluid rounded shadow"
+                    alt="{{ product['product_name'] }}"
+                    style="width: 100%; max-height: 500px; object-fit: cover;">
+
+            {% else %}
+
+                <div class="d-flex justify-content-center align-items-center bg-light rounded"
+                     style="height: 400px;">
+
+                    <span class="text-muted">
+                        No Image Available
+                    </span>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <!-- Product Information -->
+
+        <div class="col-md-6">
+
+
+            <span class="badge bg-secondary mb-2">
+
+                {{ product['category'] }}
+
+            </span>
+
+
+            <h1 class="mb-3">
+
+                {{ product['product_name'] }}
+
+            </h1>
+
+
+            <div class="text-warning mb-3">
+
+                ⭐⭐⭐⭐⭐
+
+            </div>
+
+
+            <h2 class="text-success mb-4">
+
+                ₹{{ product['price'] }}
+
+            </h2>
+
+
+            <!-- Stock -->
+
+            {% if product['stock'] > 0 %}
+
+                <p class="text-success fw-bold">
+
+                    ✓ In Stock ({{ product['stock'] }} available)
+
+                </p>
+
+            {% else %}
+
+                <p class="text-danger fw-bold">
+
+                    ✗ Out of Stock
+
+                </p>
+
+            {% endif %}
+
+
+            <!-- Description -->
+
+            <hr>
+
+
+            <h5>
+                Product Description
+            </h5>
+
+
+            <p class="text-muted">
+
+                {{ product['description'] or 'No description available.' }}
+
+            </p>
+
+
+            <!-- Buttons -->
+
+
+            <div class="mt-4">
+
+                {% if product['stock'] > 0 %}
+
+                    <form
+                        action="{{ url_for('add_to_cart', product_id=product['id']) }}"
+                        method="POST"
+                        class="mb-3">
+
+                       <button type="submit"
+                                class="btn btn-success btn-lg">
+                            Add To Cart
+                       </button>
+
+                    </form>
+
+                 {% else %}
+
+                    <button class="btn btn-secondary btn-lg mb-3"
+                            disabled>
+                         Out of Stock
+                    </button>
+
+                {% endif %}
+
+                <a href="/products"
+                    class="btn btn-outline-primary btn-lg">
+                     Continue Shopping
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Footer -->
+
+<footer class="bg-dark text-white text-center py-3 mt-5">
+
+    <p class="mb-0">
+        © 2026 Mobile Store
+    </p>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
